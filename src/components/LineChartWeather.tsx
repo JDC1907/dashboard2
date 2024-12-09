@@ -12,6 +12,7 @@ const xLabels = [
     'Page F',
     'Page G',
 ];
+// hola
 
 export default function LineChartWeather() {
     return (
