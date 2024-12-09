@@ -67,17 +67,21 @@ function App() {
         let dateStart = timeNode.getAttribute("from") || "";
         let dateEnd = timeNode.getAttribute("to") || "";
 
-        let precipitationNode = timeNode.querySelector("precipitation");
-        let precipitation = precipitationNode?.getAttribute("probability") || "";
+        let precipitationNode = timeNode.querySelector("precipitation")?.getAttribute("probability") || "";
 
-        let humidityNode = timeNode.querySelector("humidity");
-        let humidity = humidityNode?.getAttribute("value") || "";
+        let humidityNode = timeNode.querySelector("humidity")?.getAttribute("value") || "";
 
-        let cloudsNode = timeNode.querySelector("clouds");
-        let clouds = cloudsNode?.getAttribute("all") || "";
+        let cloudsNode = timeNode.querySelector("clouds")?.getAttribute("all") || "";
 
         // Crear objeto de tipo Item y agregarlo al arreglo temporal
-        dataToItems.push({ dateStart, dateEnd, precipitation, humidity, clouds });
+        dataToItems.push({
+          dateStart: dateStart.split("T")[0], // Obtiene solo la fecha
+          dateStart: dateStart.split("T")[1], // Obtiene solo la hora
+          dateEnd: dateEnd.split("T")[0], // Obtiene solo la fecha
+          dateEnd: dateEnd.split("T")[1], // Obtiene solo la hora
+          precipitation: precipitationNode,
+          humidity: humidityNode,
+          clouds: cloudsNode, });
       }
 
       {/* Modificación de la variable de estado mediante la función de actualización */ }
@@ -107,7 +111,7 @@ function App() {
 
 
       {/* Tabla */}
-      <Grid size={{ xs: 12, sm: 9 }}>
+      <Grid size={{ xs: 12, sm: 8 }}>
 
 
         {/* Grid Anidado */}
@@ -119,14 +123,15 @@ function App() {
           <TableWeather itemsIn={items} />
           </Grid>
         </Grid>
+        </Grid>
 
         {/* Gráfico */}
-        <Grid size={{ xs: 12, sm: 7 }}>
+        <Grid size={{ xs: 12, sm: 4 }}>
 
           <LineChartWeather />
         </Grid>
 
-      </Grid>
+      
     </Grid >
   );
 }
