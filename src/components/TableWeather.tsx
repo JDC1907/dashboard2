@@ -13,24 +13,6 @@ interface MyProp {
   itemsIn: Item[];
 }
 
-// function createData(
-//   name: string,
-//   calories: number,
-//   fat: number,
-//   carbs: number,
-//   protein: number,
-// ) {
-//   return { name, calories, fat, carbs, protein };
-// }
-
-// const rows = [
-//   createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-//   createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-//   createData('Eclair', 262, 16.0, 24, 6.0),
-//   createData('Cupcake', 305, 3.7, 67, 4.3),
-//   createData('Gingerbread', 356, 16.0, 49, 3.9),
-// ];
-
 export default function BasicTable(props: MyProp) {
   // Crear la variable de estado y función de actualización
   const [rows, setRows] = useState<Item[]>([]);
@@ -38,7 +20,7 @@ export default function BasicTable(props: MyProp) {
   // useEffect que actualiza la variable de estado con props.itemsIn
   useEffect(() => {
     setRows(props.itemsIn);
-  }, [props]);
+  }, [props.itemsIn]);
 
   return (
     <TableContainer component={Paper}>
@@ -46,7 +28,9 @@ export default function BasicTable(props: MyProp) {
         <TableHead>
           <TableRow>
             {/* Cambiar nombres de las cabeceras */}
-            <TableCell>Hora de inicio</TableCell>
+            <TableCell>Fecha de inicio</TableCell>
+            <TableCell align="right">Hora de inicio</TableCell>
+            <TableCell align="right">Fecha de fin</TableCell>
             <TableCell align="right">Hora de fin</TableCell>
             <TableCell align="right">Precipitación</TableCell>
             <TableCell align="right">Humedad</TableCell>
@@ -61,12 +45,26 @@ export default function BasicTable(props: MyProp) {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.dateStart}
+                {row.dateStart} {/* Fecha de inicio */}
               </TableCell>
-              <TableCell align="right">{row.dateEnd}</TableCell>
-              <TableCell align="right">{row.precipitation}</TableCell>
-              <TableCell align="right">{row.humidity}</TableCell>
-              <TableCell align="right">{row.clouds}</TableCell>
+              <TableCell align="right">
+                {row.timeStart || "00:00"} {/* Hora de inicio */}
+              </TableCell>
+              <TableCell align="right">
+                {row.dateEnd} {/* Fecha de fin */}
+              </TableCell>
+              <TableCell align="right">
+                {row.timeEnd || "00:00"} {/* Hora de fin */}
+              </TableCell>
+              <TableCell align="right">
+                {row.precipitation || "0"}
+              </TableCell>
+              <TableCell align="right">
+                {row.humidity || "0"}
+              </TableCell>
+              <TableCell align="right">
+                {row.clouds || "0"}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

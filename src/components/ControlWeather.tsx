@@ -18,7 +18,11 @@ import FormControl from '@mui/material/FormControl';
 
 
 
-export default function ControlWeather() {
+interface ControlWeatherProps {
+    onVariableChange: (variable: string) => void; // Declarar la función para enviar la variable
+}
+
+export default function ControlWeather({ onVariableChange }: ControlWeatherProps) {
     {/* Constante de referencia a un elemento HTML */ }
     const descriptionRef = useRef<HTMLDivElement>(null);
 
@@ -39,6 +43,10 @@ export default function ControlWeather() {
             descriptionRef.current.innerHTML = (idx >= 0) ? items[idx]["description"] : ""
         }
 
+        // Llamar a la función prop para enviar la variable seleccionada
+        if (idx >= 0) {
+            onVariableChange(items[idx]["name"]); // Envía el nombre de la variable seleccionada
+        }
     };
 
     {/* Arreglo de objetos */ }
